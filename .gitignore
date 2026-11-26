@@ -1,0 +1,19 @@
+# Dependências e saída
+/node_modules
+/build
+.docusaurus
+.cache-loader
+
+# Gerado a partir de conteudo/ no build (não editar)
+/docs
+
+# Lixo de SO / Obsidian
+.DS_Store
+Thumbs.db
+desktop.ini
+.obsidian/
+.trash/
+*.bak
+*.bak-*
+.env*
+npm-debug.log*

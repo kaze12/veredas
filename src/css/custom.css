@@ -1,0 +1,747 @@
+/* =========================================================
+   Zhang Qian
+   Tema de leitura inspirado no Wikimedia Vector
+   ========================================================= */
+
+/* ---------- Variáveis ---------- */
+
+:root {
+  --zq-font-sans:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Inter,
+    Helvetica,
+    Arial,
+    sans-serif;
+
+  --zq-font-serif:
+    "Linux Libertine",
+    Georgia,
+    "Times New Roman",
+    "Source Serif 4",
+    serif;
+
+  --zq-text: #202122;
+  --zq-muted: #54595d;
+  --zq-border: #a2a9b1;
+  --zq-border-light: #c8ccd1;
+  --zq-link: #3366cc;
+  --zq-link-hover: #2a4b8d;
+  --zq-code-bg: #f8f9fa;
+  --zq-table-head: #eaecf0;
+
+  --ifm-font-family-base: var(--zq-font-sans);
+  --ifm-heading-font-family: var(--zq-font-sans);
+
+  --ifm-color-primary: #3366cc;
+  --ifm-color-primary-dark: #2a4b8d;
+  --ifm-color-primary-darker: #233566;
+  --ifm-color-primary-light: #447ff5;
+  --ifm-color-primary-lighter: #6ea6ff;
+
+  --ifm-font-size-base: 16px;
+  --ifm-line-height-base: 1.6;
+}
+
+[data-theme='dark'] {
+  --zq-text: #eaecf0;
+  --zq-muted: #a2a9b1;
+  --zq-border: #54595d;
+  --zq-border-light: #3a3f43;
+  --zq-link: #6ea6ff;
+  --zq-link-hover: #99bfff;
+  --zq-code-bg: #27292d;
+  --zq-table-head: #2f3336;
+
+  --ifm-color-primary: #6ea6ff;
+  --ifm-color-primary-dark: #5b99f5;
+  --ifm-color-primary-darker: #4f8ce6;
+  --ifm-color-primary-light: #8bb8ff;
+  --ifm-color-primary-lighter: #a8caff;
+}
+
+
+/* =========================================================
+   TEXTO DO ARTIGO
+   ========================================================= */
+
+.theme-doc-markdown {
+  color: var(--zq-text);
+  font-family: var(--zq-font-sans);
+  font-size: 0.96rem;
+  line-height: 1.65;
+}
+
+.theme-doc-markdown p {
+  margin-top: 0;
+  margin-bottom: 0.8em;
+}
+
+
+/* =========================================================
+   RESET COMPLETO DOS HEADINGS
+   Remove linhas e efeitos anteriores
+   ========================================================= */
+
+.theme-doc-markdown h1,
+.theme-doc-markdown h2,
+.theme-doc-markdown h3,
+.theme-doc-markdown h4,
+.theme-doc-markdown h5,
+.theme-doc-markdown h6 {
+  background: none !important;
+  box-shadow: none !important;
+
+  padding-left: 0;
+  padding-right: 0;
+
+  line-height: 1.25;
+}
+
+/* Remove linhas extras criadas por pseudo-elementos */
+.theme-doc-markdown h1::before,
+.theme-doc-markdown h1::after,
+.theme-doc-markdown h2::before,
+.theme-doc-markdown h2::after,
+.theme-doc-markdown h3::before,
+.theme-doc-markdown h3::after {
+  content: none !important;
+  display: none !important;
+}
+
+
+/* =========================================================
+   H1
+   Títulos principais / Ícones
+   ========================================================= */
+
+.theme-doc-markdown h1 {
+  font-family: var(--zq-font-serif);
+  font-size: 1.9rem;
+  font-weight: 700;
+
+  margin-top: 1.35em;
+  margin-bottom: 0.65em;
+
+  padding-bottom: 0.18em;
+
+  border: 0 !important;
+  border-bottom: 2px solid var(--zq-border) !important;
+}
+
+
+/* Primeiro H1 da página: título do artigo */
+.theme-doc-markdown > h1:first-child {
+  font-size: 2.15rem;
+  font-weight: 700;
+  margin-top: 0;
+}
+
+
+/* =========================================================
+   H2
+   Subseções
+   ========================================================= */
+
+.theme-doc-markdown h2 {
+  font-family: var(--zq-font-serif);
+  font-size: 1.28rem;
+  font-weight: 400;
+
+  margin-top: 1.45em;
+  margin-bottom: 0.55em;
+
+  padding-bottom: 0.12em;
+
+  border: 0 !important;
+  border-bottom: 1px solid var(--zq-border) !important;
+}
+
+
+/* =========================================================
+   H3
+   Subdivisões menores — sem linha
+   ========================================================= */
+
+.theme-doc-markdown h3 {
+  font-family: var(--zq-font-sans);
+  font-size: 1.08rem;
+  font-weight: 700;
+  font-style: normal;
+
+  margin-top: 1.25em;
+  margin-bottom: 0.45em;
+
+  padding-bottom: 0;
+
+  border: 0 !important;
+}
+
+
+/* H4–H6 */
+
+.theme-doc-markdown h4 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-top: 1.15em;
+  margin-bottom: 0.4em;
+  border: 0 !important;
+}
+
+.theme-doc-markdown h5,
+.theme-doc-markdown h6 {
+  font-size: 0.96rem;
+  font-weight: 700;
+  margin-top: 1em;
+  margin-bottom: 0.35em;
+  border: 0 !important;
+}
+
+
+/* =========================================================
+   LINKS
+   ========================================================= */
+
+.theme-doc-markdown a {
+  color: var(--zq-link);
+  text-decoration: none;
+}
+
+.theme-doc-markdown a:hover {
+  color: var(--zq-link-hover);
+  text-decoration: underline;
+}
+
+
+/* =========================================================
+   CITAÇÕES
+   ========================================================= */
+
+.theme-doc-markdown blockquote {
+  color: var(--zq-text);
+  background: transparent;
+
+  margin: 1em 0 1em 1.5em;
+  padding: 0.15em 0 0.15em 1em;
+
+  border: 0;
+  border-left: 2px solid var(--zq-border);
+
+  font-style: normal;
+}
+
+
+/* =========================================================
+   LISTAS
+   ========================================================= */
+
+.theme-doc-markdown ul,
+.theme-doc-markdown ol {
+  margin-top: 0.3em;
+  margin-bottom: 0.8em;
+  padding-left: 2em;
+}
+
+.theme-doc-markdown li {
+  margin: 0.15em 0;
+}
+
+
+/* =========================================================
+   TABELAS
+   ========================================================= */
+
+.theme-doc-markdown table {
+  border-collapse: collapse;
+  border-spacing: 0;
+
+  width: auto;
+  max-width: 100%;
+
+  margin: 1em 0;
+
+  font-size: 0.92rem;
+}
+
+.theme-doc-markdown table th,
+.theme-doc-markdown table td {
+  border: 1px solid var(--zq-border);
+  padding: 0.35em 0.55em;
+}
+
+.theme-doc-markdown table th {
+  background: var(--zq-table-head);
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   CÓDIGO
+   ========================================================= */
+
+.theme-doc-markdown code {
+  background: var(--zq-code-bg);
+  border: 1px solid var(--zq-border-light);
+  border-radius: 2px;
+
+  padding: 0.1em 0.3em;
+
+  font-size: 0.9em;
+}
+
+
+/* =========================================================
+   LINHAS HORIZONTAIS
+   ========================================================= */
+
+.theme-doc-markdown hr {
+  border: 0;
+  border-top: 1px solid var(--zq-border);
+  margin: 1.5em 0;
+}
+
+
+/* =========================================================
+   TOC LATERAL
+   ========================================================= */
+
+.table-of-contents {
+  font-size: 0.82rem;
+  line-height: 1.4;
+
+  border-left: 1px solid var(--zq-border-light);
+}
+
+.table-of-contents__link {
+  color: var(--zq-muted);
+}
+
+.table-of-contents__link:hover,
+.table-of-contents__link--active {
+  color: var(--zq-link);
+  text-decoration: none;
+}
+
+
+/* =========================================================
+   BREADCRUMBS
+   ========================================================= */
+
+.breadcrumbs {
+  font-size: 0.82rem;
+}
+
+
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
+
+.menu {
+  font-size: 0.92rem;
+}
+
+.menu__link--active {
+  color: var(--zq-link);
+}
+
+
+/* =========================================================
+   BOTÕES
+   Menos aparência de "app", mais discreto
+   ========================================================= */
+
+.button {
+  border-radius: 2px;
+  font-weight: 500;
+}
+
+
+/* =========================================================
+   RESPONSIVO
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .theme-doc-markdown {
+    font-size: 0.95rem;
+  }
+
+  .theme-doc-markdown h1 {
+    font-size: 1.75rem;
+  }
+
+  .theme-doc-markdown > h1:first-child {
+    font-size: 1.95rem;
+  }
+
+  .theme-doc-markdown h2 {
+    font-size: 1.4rem;
+  }
+}
+
+
+/* =========================================================
+   Zhang Qian — identidade verde
+   Override final para cores do Docusaurus
+   ========================================================= */
+
+:root {
+  --zq-accent: #2f9e44;
+  --zq-accent-dark: #237a34;
+  --zq-accent-light: #40b858;
+
+  --zq-link: #237a34;
+  --zq-link-hover: #185c27;
+
+  --ifm-color-primary: #2f9e44;
+  --ifm-color-primary-dark: #2a8e3d;
+  --ifm-color-primary-darker: #278439;
+  --ifm-color-primary-darkest: #206d2f;
+  --ifm-color-primary-light: #37ae4e;
+  --ifm-color-primary-lighter: #40b858;
+  --ifm-color-primary-lightest: #62c973;
+
+  --ifm-link-color: #237a34;
+  --ifm-link-hover-color: #185c27;
+
+  --ifm-menu-color-active: #2f9e44;
+  --ifm-breadcrumb-color-active: #2f9e44;
+  --ifm-navbar-link-hover-color: #2f9e44;
+}
+
+[data-theme='dark'] {
+  --zq-accent: #4fc568;
+  --zq-accent-dark: #3bad54;
+  --zq-accent-light: #70d584;
+
+  --zq-link: #62d279;
+  --zq-link-hover: #85df96;
+
+  --ifm-color-primary: #4fc568;
+  --ifm-color-primary-dark: #43b95c;
+  --ifm-color-primary-darker: #3eae56;
+  --ifm-color-primary-darkest: #338f47;
+  --ifm-color-primary-light: #62d279;
+  --ifm-color-primary-lighter: #70d584;
+  --ifm-color-primary-lightest: #94e2a2;
+
+  --ifm-link-color: #62d279;
+  --ifm-link-hover-color: #85df96;
+
+  --ifm-menu-color-active: #62d279;
+  --ifm-breadcrumb-color-active: #62d279;
+  --ifm-navbar-link-hover-color: #62d279;
+}
+
+
+/* Linhas dos headings */
+
+.theme-doc-markdown h1 {
+  border-bottom-color: var(--zq-accent) !important;
+}
+
+.theme-doc-markdown h2 {
+  border-bottom-color: var(--zq-border) !important;
+}
+
+
+/* Links no artigo */
+
+.theme-doc-markdown a {
+  color: var(--zq-link) !important;
+}
+
+.theme-doc-markdown a:hover {
+  color: var(--zq-link-hover) !important;
+}
+
+
+/* Sidebar */
+
+.menu__link--active,
+.menu__link--active:hover {
+  color: var(--zq-accent) !important;
+}
+
+
+/* Breadcrumbs */
+
+.breadcrumbs__link:hover,
+.breadcrumbs__item--active .breadcrumbs__link {
+  color: var(--zq-accent) !important;
+}
+
+
+/* TOC lateral */
+
+.table-of-contents__link:hover,
+.table-of-contents__link--active {
+  color: var(--zq-accent) !important;
+}
+
+
+/* =========================================================
+   Zhang Qian — ajustes editoriais
+   ========================================================= */
+
+
+
+/* Citações */
+.theme-doc-markdown blockquote {
+  font-style: italic;
+}
+
+/* =========================================================
+   Zhang Qian — caixa alta apenas no título da página
+   ========================================================= */
+
+/* Headings internos nunca herdam a transformação do título */
+
+
+/* Título de documento gerado pelo Docusaurus */
+
+
+/* Caso o título tenha sido escrito diretamente como primeiro H1 do Markdown */
+
+
+
+/* =========================================================
+   Zhang Qian — capitalização dos títulos
+   ========================================================= */
+
+/* Título automático da página criado pelo Docusaurus */
+.theme-doc-markdown > header > h1 {
+  text-transform: uppercase !important;
+}
+
+/* Todos os headings do conteúdo mantêm a capitalização original */
+.theme-doc-markdown > h1,
+.theme-doc-markdown > h2,
+.theme-doc-markdown > h3,
+.theme-doc-markdown > h4,
+.theme-doc-markdown > h5,
+.theme-doc-markdown > h6 {
+  text-transform: none !important;
+}
+
+/* =========================================================
+   Criaturas — arte lateral no estilo Nexus
+   ========================================================= */
+
+.creature-art {
+  float: right;
+
+  width: min(40%, 430px);
+  max-height: 520px;
+
+  margin: 0.25rem 0 1.5rem 2rem;
+
+  object-fit: contain;
+  object-position: top center;
+
+  border: 0;
+  background: transparent;
+}
+
+.creature-art-clear {
+  clear: both;
+}
+
+@media (max-width: 996px) {
+  .creature-art {
+    float: none;
+    display: block;
+
+    width: min(100%, 480px);
+
+    margin: 1rem auto 1.5rem;
+  }
+}
+
+/* =========================================================
+   Criaturas — arte lateral no estilo Nexus
+   ========================================================= */
+
+.creature-art {
+  float: right;
+
+  width: min(40%, 430px);
+  max-height: 520px;
+
+  margin: 0.25rem 0 1.5rem 2rem;
+
+  object-fit: contain;
+  object-position: top center;
+
+  border: 0;
+  background: transparent;
+}
+
+.creature-art-clear {
+  clear: both;
+}
+
+@media (max-width: 996px) {
+  .creature-art {
+    float: none;
+    display: block;
+
+    width: min(100%, 480px);
+
+    margin: 1rem auto 1.5rem;
+  }
+}
+
+
+/* =========================================================
+   Criaturas — arte lateral
+   ========================================================= */
+
+.theme-doc-markdown img.creature-art {
+  float: right !important;
+  display: block;
+
+  width: min(40%, 430px) !important;
+  height: auto !important;
+  max-width: 430px !important;
+  max-height: 520px;
+
+  margin: 0.25rem 0 1.5rem 2rem !important;
+
+  object-fit: contain;
+  object-position: top center;
+
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 6px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.18);
+  background: rgba(255, 255, 255, 0.02) !important;
+}
+
+/* A página continua abaixo da imagem quando necessário */
+.theme-doc-markdown::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+@media (max-width: 996px) {
+  .theme-doc-markdown img.creature-art {
+    float: none !important;
+
+    width: min(100%, 480px) !important;
+    max-width: 480px !important;
+
+    margin: 1rem auto 1.5rem !important;
+  }
+}
+
+/* =========================================================
+   13th Age — Proezas / Feats
+   ========================================================= */
+
+.feat-block {
+  display: block;
+
+  margin: 0.75rem 0;
+  padding: 0.55rem 0.75rem;
+
+  background: rgba(162, 169, 177, 0.14);
+  border-left: 3px solid var(--zq-border);
+  border-radius: 3px;
+
+  color: inherit;
+  font-style: normal;
+  font-weight: 400;
+  line-height: inherit;
+}
+
+.feat-block strong em {
+  font-weight: 700;
+  font-style: italic;
+}
+
+[data-theme='dark'] .feat-block {
+  background: rgba(255, 255, 255, 0.055);
+}
+
+/* =========================================================
+   Admonitions — sem ícone
+   ========================================================= */
+
+.theme-admonition [class*='admonitionIcon'] {
+  display: none !important;
+}
+
+.theme-admonition [class*='admonitionHeading'] {
+  gap: 0 !important;
+}
+
+
+/* =========================================================
+   13th Age — Proezas
+   ========================================================= */
+
+/* O primeiro parágrafo continua na mesma linha do rótulo */
+.feat-block > p:first-of-type {
+  display: inline;
+  margin: 0;
+}
+
+/* Parágrafos adicionais continuam funcionando normalmente */
+.feat-block > p:not(:first-of-type) {
+  margin-top: 0.75rem;
+  margin-bottom: 0;
+}
+
+/* =========================================================
+   Headings — H2
+   ========================================================= */
+
+.theme-doc-markdown h2 {
+  font-size: 1.45rem !important;
+  font-weight: 700 !important;
+  font-style: normal !important;
+}
+
+/* Zhang Qian — H2 com traço inferior cinza */
+.theme-doc-markdown h2 {
+  border-bottom-color: #b8b8b8;
+}
+
+/* Zhang Qian — H2 com traço inferior cinza */
+.theme-doc-markdown h2 {
+  border-bottom: 1px solid #b8b8b8;
+}
+
+
+/* =========================================================
+   Notas editoriais com título H3 no conteúdo
+   O título original da nota substitui o rótulo traduzido
+   "OBSERVAÇÃO" do Docusaurus, sem remover o H3 do TOC.
+   ========================================================= */
+
+.theme-doc-markdown .theme-admonition-note:has(h3) > [class*='admonitionHeading'] {
+  display: none;
+}
+
+.theme-doc-markdown .theme-admonition-note [class*='admonitionContent'] > h3:first-child {
+  margin-top: 0;
+}
+
+
+/* Dark Ages: Mage — notas editoriais com H3 interno.
+   A classe explicita evita o rotulo automatico "OBSERVACAO".
+   O fallback global baseado em :has(h3) fica ate que as outras
+   Fellowships sejam padronizadas. */
+.theme-doc-markdown .plain-callout > [class*='admonitionHeading'] {
+  display: none !important;
+}
+
+.theme-doc-markdown .plain-callout [class*='admonitionIcon'] {
+  display: none !important;
+}
+
+.theme-doc-markdown .plain-callout [class*='admonitionContent'] > h3:first-child {
+  margin-top: 0;
+}
