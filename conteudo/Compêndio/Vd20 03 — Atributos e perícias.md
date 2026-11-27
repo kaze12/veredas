@@ -1,9 +1,7 @@
 # Índice
 Os **atributos** e as **perícias** representam as capacidades de uma personagem. Os atributos descrevem suas aptidões gerais, enquanto as perícias representam conhecimentos, treinamentos e habilidades desenvolvidas em áreas específicas.
-
 Em conjunto, atributos e perícias determinam os modificadores de **Competência** utilizados nos testes. Quanto maiores os modificadores, maior a capacidade da personagem de realizar determinada ação.
 A criação de personagens possui limites de valores de atributos e de perícias, baseados principalmente no patamar da campanha, mas outras regras podem estabelecer valores diferentes.
-
 > [!note] 🎲
 > Eu sou particularmente um entusiasta firme da existência da combinação atributos + perícias. Na minha visão, eles são o principal fundamento para balizar a comparação entre personagens em um RPG. É graças a eles que sabemos que o guerreiro é alguém mais forte, ou que o ladino é aquele capaz de passar despercebido. 
 > Existem várias formas de se representar esses elementos, inclusive neste sistema. Mas quando criamos uma base, temos a oportunidade de criar uma referência entre os fracos, os médios e os fortes. Isso não só valida a sensação de “melhor que os outros”, tão importante em qq jogo, quanto também traz a sensação de risco e consequência para os momentos em que personagens que são medíocres ou fracos em certas habilidades precisam para decidir se vão arriscar utilizá-la.
