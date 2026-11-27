@@ -47,7 +47,9 @@ function varrer(dir) {
     const saidaBase = md
       ? slugify(path.basename(base, ext)) + '.md'
       : slugify(path.basename(base, ext)) + ext.toLowerCase();
-    const saida = path.join(...partes.map(slugify), saidaBase);
+    // anexos (imagens etc.) vão para docs/_anexos: pastas com "_" nunca viram seção do site
+    const saida = md ? path.join(...partes.map(slugify), saidaBase)
+      : path.join('_anexos', ...partes.map(slugify), saidaBase);
     arquivos.push({orig: abs, rel, saida, md, nome: path.basename(base, md ? ext : '')});
   }
 }
