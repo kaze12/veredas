@@ -1,16 +1,3 @@
----
-notion-id: 3fe5a119-fbdc-811b-be02-d07ebbd36329
-base: "[[Base Veredas d20.base]]"
-cover: "[[Vd20 03 — Atributos e perícias.jpeg]]"
-Dependências: []
-Conteúdo:
-  - Compêndio
-Created time: 2026-10-18T22:36:00
-Requisitos: ""
-Descrição: Regras de atributos, perícias, graduações, defesas e aplicação nos testes.
-Situação: Em desenvolvimento
-Última edição: 2026-11-08T17:42:00
----
 # Índice
 Os **atributos** e as **perícias** representam as capacidades de uma personagem. Os atributos descrevem suas aptidões gerais, enquanto as perícias representam conhecimentos, treinamentos e habilidades desenvolvidas em áreas específicas.
 Em conjunto, atributos e perícias determinam os modificadores de **Competência** utilizados nos testes. Quanto maiores os modificadores, maior a capacidade da personagem de realizar determinada ação.
