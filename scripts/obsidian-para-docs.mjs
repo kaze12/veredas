@@ -107,6 +107,46 @@ function linkRel(de, para) {
 
 const IMG = /\.(png|jpe?g|gif|webp|svg|avif|bmp)$/i;
 
+// páginas importadas do Notion: links /p/<id> e notion.so/...-<id> apontam para a nota com esse notion-id
+const porNotion = new Map();
+for (const a of publicos) {
+  if (a.md && a.fm['notion-id']) porNotion.set(String(a.fm['notion-id']).replace(/-/g, '').toLowerCase(), a);
+}
+const EH_NOTION = /^\/p\/|^https?:\/\/[^/]*notion\.(so|site|com)\//i;
+function notionAlvo(url) {
+  const m = url.split('#')[0].match(/([0-9a-f]{32})(?:\?.*)?$/i);
+  return m ? porNotion.get(m[1].toLowerCase()) || null : null;
+}
+
+// ![[algo.base]] (Bases do Obsidian) -> tabela com as notas que pertencem à base
+function tabelaBase(base, de) {
+  let cfg = {};
+  try { cfg = matter('---\n' + fs.readFileSync(base.orig, 'utf8') + '\n---\n').data || {}; } catch {}
+  const cols = cfg.views?.[0]?.order || ['file.name'];
+  const props = cfg.properties || {};
+  const linhas = publicos
+    .filter((n) => n.md && n !== de && [].concat(n.fm.base || []).some((b) => {
+      const m = String(b).match(/\[\[([^\]|#]+)/);
+      return m && resolver(m[1], n) === base;
+    }))
+    .sort((x, y) => x.nome.localeCompare(y.nome, 'pt'));
+  if (!linhas.length) return '';
+  const esc = (v) => String(v).replace(/\|/g, '\\|').replace(/\s*\n\s*/g, ' ').replace(/</g, '&lt;');
+  const fmt = (v) => {
+    if (v == null) return '';
+    if (Array.isArray(v)) return v.map(fmt).filter(Boolean).join(', ');
+    if (v instanceof Date) return v.toISOString().slice(0, 10);
+    const s = String(v);
+    const w = s.match(/^\[\[([^\]|#]+)(?:#[^\]|]*)?(?:\|([^\]]*))?\]\]$/);
+    if (w) return w[2] || w[1].split('/').pop();
+    return /^\d{4}-\d\d-\d\dT/.test(s) ? s.slice(0, 10) : s;
+  };
+  const cab = cols.map((c) => esc(props[c]?.displayName || (c === 'file.name' ? 'Nome' : c)));
+  const corpo = linhas.map((n) => '| ' + cols.map((c) =>
+    c === 'file.name' ? `[${esc(n.nome)}](${linkRel(de, n)})` : esc(fmt(n.fm[c]))).join(' | ') + ' |');
+  return ['', '| ' + cab.join(' | ') + ' |', '|' + cols.map(() => ' --- ').join('|') + '|', ...corpo, ''].join('\n');
+}
+
 // ---------- 2. conversão do texto ----------
 function converterTexto(texto, a, avisos) {
   // separa blocos de código para não mexer neles
@@ -119,6 +159,12 @@ function converterTrecho(t, a, avisos) {
 
   // links markdown comuns para notas/arquivos locais: [x](Nota%20Tal.md)
   t = t.replace(/(!?)\[([^\]]*)\]\(<?([^)<>]+?)>?\)/g, (m, ex, txt, url) => {
+    if (EH_NOTION.test(url)) {
+      const d = notionAlvo(url);
+      if (d) return `${ex}[${txt}](${linkRel(a, d)})`;
+      avisos.push(`link do Notion sem página correspondente: ${url}`);
+      return url.startsWith('/') ? txt : m;
+    }
     if (/^[a-z]+:|^#|^\//i.test(url)) return m;
     const [alvo, hash] = url.split('#');
     let dec; try { dec = decodeURIComponent(alvo); } catch { dec = alvo; }
@@ -131,6 +177,7 @@ function converterTrecho(t, a, avisos) {
   t = t.replace(/!\[\[([^\]|#]+)(#[^\]|]*)?(?:\|([^\]]*))?\]\]/g, (m, alvo, sec, extra) => {
     const dest = resolver(alvo, a);
     if (!dest) { avisos.push(`embed não encontrado: ${alvo}`); return ''; }
+    if (/\.base$/i.test(dest.saida)) return tabelaBase(dest, a);
     if (!dest.md) {
       const alt = extra && !/^\d+(x\d+)?$/.test(extra) ? extra : dest.nome;
       return IMG.test(dest.saida) ? `![${alt}](${linkRel(a, dest)})` : `[${alt}](${linkRel(a, dest)})`;
@@ -142,6 +189,13 @@ function converterTrecho(t, a, avisos) {
   t = t.replace(/\[\[([^\]|#]*)(#[^\]|]*)?(?:\|([^\]]*))?\]\]/g, (m, alvo, sec, apelido) => {
     const secTxt = sec ? sec.slice(1).replace(/^\^/, '') : '';
     const texto = apelido || (alvo ? alvo.split('/').pop() : secTxt) + (alvo && secTxt ? ` › ${secTxt}` : '');
+    if (/^NOTION_PAGE:/i.test(alvo)) {
+      // página do Notion que não veio na exportação (o Importer deixa só o id)
+      const d = porNotion.get(alvo.slice(12).replace(/-/g, '').toLowerCase());
+      if (d) return `[${apelido || d.fm.title || d.nome}](${linkRel(a, d)})`;
+      avisos.push(`página do Notion não importada: ${alvo.slice(12)}`);
+      return apelido || '*(página do Notion não importada)*';
+    }
     const dest = alvo ? resolver(alvo, a) : a;
     if (!dest) { avisos.push(`link para nota inexistente/privada: ${alvo}`); return texto; }
     const href = (dest === a && !alvo ? '' : linkRel(a, dest)) + (secTxt ? '#' + ancora(secTxt) : '');
@@ -179,8 +233,12 @@ for (const a of publicos.filter((x) => x.md)) {
 }
 for (const [saida, rotulo] of pastas) {
   fs.mkdirSync(path.join(DESTINO, saida), {recursive: true});
-  fs.writeFileSync(path.join(DESTINO, saida, '_category_.json'),
-    JSON.stringify({label: rotulo, link: {type: 'generated-index', slug: '/' + saida.split(path.sep).join('/')}}, null, 2));
+  // nota com o mesmo nome da pasta (folder note) vira a página da pasta; senão, lista automática
+  const temNotaDaPasta = publicos.some((a) => a.md && path.dirname(a.saida) === saida &&
+    path.basename(a.saida, '.md') === path.basename(saida));
+  const cat = {label: rotulo};
+  if (!temNotaDaPasta) cat.link = {type: 'generated-index', slug: '/' + saida.split(path.sep).join('/')};
+  fs.writeFileSync(path.join(DESTINO, saida, '_category_.json'), JSON.stringify(cat, null, 2));
 }
 
 let temInicio = false;
@@ -188,10 +246,23 @@ const avisosGerais = [];
 for (const a of publicos) {
   const alvo = path.join(DESTINO, a.saida);
   fs.mkdirSync(path.dirname(alvo), {recursive: true});
-  if (!a.md) { fs.copyFileSync(a.orig, alvo); continue; }
+  if (!a.md) { if (!/\.base$/i.test(a.saida)) fs.copyFileSync(a.orig, alvo); continue; }
 
   const avisos = [];
-  const corpo = converterTexto(a.corpo, a, avisos);
+  let corpo = converterTexto(a.corpo, a, avisos);
+  // título visível = nome da nota (como no Obsidian), a não ser que a nota já comece com ele
+  const limpa = (x) => chave(x.replace(/[*_`]/g, '').trim());
+  const h1 = corpo.match(/^\s*#\s+(.+)$/m);
+  const comecaComTitulo = h1 && corpo.trimStart().startsWith('#') && !corpo.trimStart().startsWith('##') &&
+    limpa(h1[1]) === limpa(a.fm.title || a.nome);
+  let topo = comecaComTitulo ? '' : `# ${a.fm.title || a.nome}\n\n`;
+  if (comecaComTitulo) corpo = corpo.trimStart().replace(/^#\s+.+\n?/, (l) => { topo = l + '\n'; return ''; });
+  // capa (cover) importada do Notion
+  const capa = a.fm.cover && String(a.fm.cover).match(/^\[\[([^\]|]+)/);
+  const capaDest = capa ? resolver(capa[1], a) : a.fm.cover ? resolver(String(a.fm.cover), a) : null;
+  if (capaDest && IMG.test(capaDest.saida)) topo += `![](${linkRel(a, capaDest)})\n\n`;
+  else if (a.fm.cover) avisos.push(`capa não encontrada: ${a.fm.cover}`);
+  corpo = topo + corpo;
   const fm = {};
   // só repassa campos que o Docusaurus entende; o resto do frontmatter do Obsidian é ignorado
   for (const k of ['title', 'description', 'sidebar_label', 'sidebar_position', 'slug', 'keywords', 'hide_table_of_contents']) {
@@ -199,7 +270,6 @@ for (const a of publicos) {
   }
   const tags = [].concat(a.fm.tags || []).filter((x) => typeof x === 'string' && x.trim());
   if (tags.length) fm.tags = tags.map((x) => x.replace(/^#/, ''));
-  if (!fm.title && !/^\s*#\s+\S/.test(corpo)) fm.title = a.nome;
   if (!fm.sidebar_label) fm.sidebar_label = a.nome;
   if (!temInicio && !a.rel.includes(path.sep) && NOMES_INICIO.includes(chave(a.nome))) {
     fm.slug = '/'; temInicio = true;
