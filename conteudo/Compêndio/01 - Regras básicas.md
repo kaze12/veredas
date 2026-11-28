@@ -31,11 +31,11 @@ Teste Natural não é sinônimo de **Resultado Natural**: o primeiro é uma moda
 ### Notas de design
 *Dificuldades sugeridas para salvaguardas com teste natural:* quando uma salvaguarda for resolvida por teste natural de 2d20, sem bônus, sugere-se a escala abaixo. Os percentuais consideram a escolha habitual entre os dois dados, com a obrigação de escolher o resultado 1 quando ele aparecer em qualquer um deles.
 
-| Dificuldade | Chance desejada | Teste natural sugerido | Chance real | Diferença |
-| --- | --- | --- | --- | --- |
-| Fácil | 50% | **15+** | 48% | −2 p.p. |
-| Médio | 25% | **18+** | 26,25% | +1,25 p.p. |
-| Difícil | 12,5% | **20** | 9,25% | −3,25 p.p. |
+| Dificuldade | Chance desejada | Teste natural sugerido | Chance real | Diferença  |
+| ----------- | --------------- | ---------------------- | ----------- | ---------- |
+| Fácil       | 50%             | **15+**                | 48%         | −2 p.p.    |
+| Médio       | 25%             | **18+**                | 26,25%      | +1,25 p.p. |
+| Difícil     | 12,5%           | **20**                 | 9,25%       | −3,25 p.p. |
 
 ## Resultado passivo
 Quando uma regra exige **Resultado Passivo**, assume-se **15** em vez de rolar os dados, somando-se os modificadores fixos aplicáveis. As Defesas são normalmente resolvidas dessa forma, salvo regra específica.
