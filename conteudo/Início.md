@@ -23,7 +23,7 @@ Esta versão foi pensada para **alta fantasia**, com heróis competentes e dram�
 
 ## Por onde começar
 
-1. [[01 - REGRAS BÁSICAS|Regras básicas]]: como os testes funcionam.
+1. [[01 - Regras básicas|Regras básicas]]: como os testes funcionam.
 2. [[02 - Criação de personagens|Criação de personagens]]: monte seu herói.
 3. [[07 - Combate|Combate]]: quando a conversa acaba.
 
